@@ -7,7 +7,6 @@ import { BotMessage, SlashCommandPayload } from './models';
 import { SlackService } from './slack.service';
 
 @Controller('slack')
-@UseGuards(SlackRequestGuard)
 @UseFilters(new SlackUnauthorizedExceptionFilter())
 export class SlackController {
 
@@ -24,6 +23,7 @@ export class SlackController {
   }
 
   @Post('info')
+  @UseGuards(SlackRequestGuard)
   async handleInfo(@Body() data: SlashCommandPayload): Promise<BotMessage> {
     try {
       this.slackService.handleInfo(data);
