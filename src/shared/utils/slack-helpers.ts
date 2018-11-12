@@ -1,7 +1,6 @@
-import { createHmac, timingSafeEqual } from 'crypto';
+import { createHmac } from 'crypto';
 import { stringify } from 'querystring';
 import { BotMessage, SlashCommandPayload } from '../../slack/models';
-import { Helpers } from './helpers';
 
 export class SlackHelpers {
   static defaultMessage: BotMessage = {
@@ -24,18 +23,13 @@ export class SlackHelpers {
     };
   }
 
-  static hashBaseString(slackSignature: string, payload: SlashCommandPayload, ts: number): Buffer {
+  static hashBaseString(slackSignature: string, payload: SlashCommandPayload, ts: number): string {
     const hmac = createHmac('sha256', slackSignature);
     const sigBaseString = `v0:${ts}:${stringify(payload)}`;
-    return Helpers.toBuffer(`v0=${hmac.update(sigBaseString).digest()}`);
+    return `v0=${hmac.update(sigBaseString).digest()}`;
   }
 
-  static bufferizeSlackSignature(slackSignature: string): Buffer {
-    const sig = slackSignature.split('=')[1];
-    return Helpers.toBuffer(`v0=${sig}`);
-  }
-
-  static compareHmac(signature, slackSignature): boolean {
-    return timingSafeEqual(signature, slackSignature);
+  static compareHmac(signature: string, slackSignature: string): boolean {
+    return signature === slackSignature;
   }
 }

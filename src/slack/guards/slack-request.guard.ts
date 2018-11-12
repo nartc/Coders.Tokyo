@@ -24,6 +24,8 @@ export class SlackRequestGuard implements CanActivate {
     const slackSignature = request.headers['x-slack-signature'];
     const payload = request.body as SlashCommandPayload;
     const hash = SlackHelpers.hashBaseString(this.configService.get(ConfigKey.SLACK_SIGN_IN_TOKEN), payload, ts);
-    return SlackHelpers.compareHmac(hash, SlackHelpers.bufferizeSlackSignature(slackSignature));
+
+    console.log({ hash });
+    return SlackHelpers.compareHmac(hash, slackSignature);
   }
 }
