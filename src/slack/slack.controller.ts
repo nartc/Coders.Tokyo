@@ -1,5 +1,7 @@
-import { Body, Controller, Get, InternalServerErrorException, Post } from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post, Req } from '@nestjs/common';
 import { GoogleSearchResponse } from '../shared/google-search';
+import { SlackHelpers } from '../shared/utils/slack-helpers';
+import { BotMessage, SlashCommandPayload } from './models';
 import { SlackService } from './slack.service';
 
 @Controller('slack')
@@ -17,9 +19,14 @@ export class SlackController {
     }
   }
 
-  @Post('help')
-  async handleHelp(@Body() data): Promise<string> {
-    console.log({ data });
-    return 'Coming soon...';
+  @Post('info')
+  async handleInfo(@Body() data: SlashCommandPayload, @Req() request): Promise<BotMessage> {
+    console.log({ headers: request.headers });
+    try {
+      this.slackService.handleInfo(data);
+      return SlackHelpers.getImmediateResponse();
+    } catch (e) {
+      return SlackHelpers.getErrorResponse(e);
+    }
   }
 }

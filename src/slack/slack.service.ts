@@ -6,12 +6,18 @@ import { GoogleSearchResponse, GoogleSearchService } from '../shared/google-sear
 import { ConfigKey } from '../shared/configuration/configuration.enum';
 import { ConfigurationService } from '../shared/configuration/configuration.service';
 import { Helpers } from '../shared/utils/helpers';
+import { SlashCommandPayload } from './models';
 
 @Injectable()
 export class SlackService {
 
   constructor(private readonly googleSearchService: GoogleSearchService,
               private readonly configService: ConfigurationService) {
+  }
+
+  async handleInfo(payload: SlashCommandPayload): Promise<void> {
+    const { response_url, channel_id, text } = payload;
+
   }
 
   async searchSo(): Promise<GoogleSearchResponse> {
