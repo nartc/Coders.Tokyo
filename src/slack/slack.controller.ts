@@ -1,4 +1,4 @@
-import { Controller, Get, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, InternalServerErrorException, Post } from '@nestjs/common';
 import { GoogleSearchResponse } from '../shared/google-search';
 import { SlackService } from './slack.service';
 
@@ -15,5 +15,10 @@ export class SlackController {
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
+  }
+
+  @Post('help')
+  async handleHelp(): Promise<string> {
+    return 'Coming soon...';
   }
 }
