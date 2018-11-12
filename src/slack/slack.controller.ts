@@ -1,4 +1,5 @@
 import { Body, Controller, Get, InternalServerErrorException, Post, Req } from '@nestjs/common';
+import { stringify } from 'querystring';
 import { GoogleSearchResponse } from '../shared/google-search';
 import { SlackHelpers } from '../shared/utils/slack-helpers';
 import { BotMessage, SlashCommandPayload } from './models';
@@ -21,7 +22,8 @@ export class SlackController {
 
   @Post('info')
   async handleInfo(@Body() data: SlashCommandPayload, @Req() request): Promise<BotMessage> {
-    console.log({ headers: request.headers, body: request.body, request });
+    console.log({ headers: request.headers, body: request.body });
+    console.log({stringBody: stringify(data)});
     try {
       this.slackService.handleInfo(data);
       return SlackHelpers.getImmediateResponse();
