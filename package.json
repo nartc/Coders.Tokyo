@@ -17,8 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=development; npm install --only=dev",
-    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production; npm run build"
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@nestjs/common": "^5.4.0",
@@ -29,7 +28,8 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.1",
+    "pm2": "^3.2.2"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.1.0",
@@ -43,7 +43,6 @@
     "@types/supertest": "^2.0.5",
     "jest": "^23.5.0",
     "nodemon": "^1.18.3",
-    "pm2": "^3.2.2",
     "prettier": "^1.14.2",
     "supertest": "^3.1.0",
     "ts-jest": "^23.1.3",
