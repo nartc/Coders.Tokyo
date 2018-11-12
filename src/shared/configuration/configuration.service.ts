@@ -22,7 +22,7 @@ export class ConfigurationService {
       NODE_ENV: string()
         .valid(['development', 'production'])
         .default('development'),
-      PORT: number().default(3000),
+      PORT: number().default(process.env.PORT || 3000),
       GG_SEARCH_API_KEY: string(),
       GG_SEARCH_SO_CX: string(),
       GG_SEARCH_MDN_CX: string(),
