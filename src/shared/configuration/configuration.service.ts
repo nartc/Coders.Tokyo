@@ -13,6 +13,7 @@ export class ConfigurationService {
   private readonly envConfig: EnvConfig;
 
   constructor(filePath: string) {
+    console.log({port: process.env.PORT});
     const config = parse(readFileSync(filePath));
     this.envConfig = this.validateConfig(config);
   }
