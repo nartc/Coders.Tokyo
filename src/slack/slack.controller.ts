@@ -1,4 +1,4 @@
-import { Controller, Get, InternalServerErrorException, Post } from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post } from '@nestjs/common';
 import { GoogleSearchResponse } from '../shared/google-search';
 import { SlackService } from './slack.service';
 
@@ -18,7 +18,8 @@ export class SlackController {
   }
 
   @Post('help')
-  async handleHelp(): Promise<string> {
+  async handleHelp(@Body() data): Promise<string> {
+    console.log({ data });
     return 'Coming soon...';
   }
 }
