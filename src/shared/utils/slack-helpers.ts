@@ -24,9 +24,10 @@ export class SlackHelpers {
     };
   }
 
-  static hashBaseString(slackSignature: Buffer, payload: SlashCommandPayload, ts: number) {
+  static hashBaseString(slackSignature: string, payload: SlashCommandPayload, ts: number) {
     const hmac = createHmac('sha256', slackSignature);
     const sigBaseString = `v0:${ts}:${stringify(payload)}`;
+    console.log({ sigBaseString, hash: `v0=${hmac.update(sigBaseString).digest()}` });
     return Helpers.toBuffer(`v0=${hmac.update(sigBaseString).digest()}`);
   }
 

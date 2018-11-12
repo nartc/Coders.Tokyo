@@ -48,10 +48,6 @@ export class ConfigurationService {
     return Number(this.envConfig[ConfigKey.PORT]);
   }
 
-  get slackSignInToken(): Buffer {
-    return Helpers.toBuffer(this.envConfig[ConfigKey.SLACK_SIGN_IN_TOKEN]);
-  }
-
   get isDevelopment(): boolean {
     return this.envConfig[ConfigKey.NODE_ENV] === 'development';
   }
