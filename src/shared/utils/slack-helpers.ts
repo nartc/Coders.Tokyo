@@ -24,11 +24,15 @@ export class SlackHelpers {
     };
   }
 
-  static hashBaseString(slackSignature: string, payload: SlashCommandPayload, ts: number) {
+  static hashBaseString(slackSignature: string, payload: SlashCommandPayload, ts: number): Buffer {
     const hmac = createHmac('sha256', slackSignature);
     const sigBaseString = `v0:${ts}:${stringify(payload)}`;
-    console.log({ sigBaseString, hash: `v0=${hmac.update(sigBaseString).digest()}` });
     return Helpers.toBuffer(`v0=${hmac.update(sigBaseString).digest()}`);
+  }
+
+  static bufferizeSlackSignature(slackSignature: string): Buffer {
+    const sig = slackSignature.split('=')[1];
+    return Helpers.toBuffer(`v0=${sig}`);
   }
 
   static compareHmac(signature, slackSignature): boolean {
