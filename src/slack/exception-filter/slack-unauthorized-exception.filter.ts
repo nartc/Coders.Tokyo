@@ -9,7 +9,7 @@ export class SlackUnauthorizedExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
 
     response.status(HttpStatus.UNAUTHORIZED).json(
-      SlackHelpers.getErrorResponse(exception.message),
+      SlackHelpers.getErrorResponse(exception),
     );
   }
 }
