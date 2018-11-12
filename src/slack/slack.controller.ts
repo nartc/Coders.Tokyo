@@ -1,5 +1,4 @@
-import { Body, Controller, Get, InternalServerErrorException, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
-import { stringify } from 'querystring';
+import { Body, Controller, Get, InternalServerErrorException, Post, UseFilters, UseGuards } from '@nestjs/common';
 import { GoogleSearchResponse } from '../shared/google-search';
 import { SlackHelpers } from '../shared/utils/slack-helpers';
 import { SlackUnauthorizedExceptionFilter } from './exception-filter/slack-unauthorized-exception.filter';
@@ -9,7 +8,7 @@ import { SlackService } from './slack.service';
 
 @Controller('slack')
 @UseGuards(SlackRequestGuard)
-@UseFilters(SlackUnauthorizedExceptionFilter)
+@UseFilters(new SlackUnauthorizedExceptionFilter())
 export class SlackController {
 
   constructor(private readonly slackService: SlackService) {

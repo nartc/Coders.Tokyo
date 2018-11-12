@@ -21,11 +21,16 @@ export class SlackRequestGuard implements CanActivate {
 
   private validateSlackRequest(request): boolean {
     const ts = parseInt(request.headers['x-slack-request-timestamp'], 10);
+
+    const currentTime = Math.floor(new Date().getTime() / 1000);
+
+    if (Math.abs(currentTime - ts) > 300) {
+      return false;
+    }
+
     const slackSignature = request.headers['x-slack-signature'];
     const payload = request.body as SlashCommandPayload;
     const hash = SlackHelpers.hashBaseString(this.configService.get(ConfigKey.SLACK_SIGN_IN_TOKEN), payload, ts);
-
-    console.log({ hash });
     return SlackHelpers.compareHmac(hash, slackSignature);
   }
 }

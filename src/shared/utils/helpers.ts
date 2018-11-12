@@ -5,4 +5,8 @@ import { GoogleSearchResponse } from '../google-search';
 
 export class Helpers {
   static catchObservableError: OperatorFunction<GoogleSearchResponse, any> = catchError((err: AxiosError) => throwError(err));
+
+  static toBuffer(str: string): Buffer {
+    return Buffer.from(str, 'utf-8');
+  }
 }
