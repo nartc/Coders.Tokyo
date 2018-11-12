@@ -1,9 +1,9 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
-import { GoogleSearchResponse } from './google-search-response.model';
 
 import { ConfigurationService } from '../configuration/configuration.service';
+import { GoogleSearchResponse } from './google-search-response.model';
 import { ConfigKey } from '../configuration/configuration.enum';
 import { GG_SEARCH_URL } from '../constants';
 
