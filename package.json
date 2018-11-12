@@ -25,11 +25,12 @@
     "dotenv": "^6.1.0",
     "joi": "^14.0.6",
     "lodash": "^4.17.11",
+    "newrelic": "^4.10.0",
+    "pm2": "^3.2.2",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
-    "typescript": "^3.0.1",
-    "pm2": "^3.2.2"
+    "typescript": "^3.0.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.1.0",

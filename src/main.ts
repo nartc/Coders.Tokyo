@@ -1,3 +1,6 @@
+// noinspection TsLint
+require('newrelic');
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
