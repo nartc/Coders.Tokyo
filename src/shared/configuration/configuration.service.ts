@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { parse } from 'dotenv';
 import { readFileSync } from 'fs';
 import { number, object, ObjectSchema, string, validate } from 'joi';
+import { Helpers } from '../utils/helpers';
 import { ConfigKey } from './configuration.enum';
 
 export interface EnvConfig {
@@ -48,7 +49,7 @@ export class ConfigurationService {
   }
 
   get slackSignInToken(): Buffer {
-    return Buffer.from(this.envConfig[ConfigKey.SLACK_SIGN_IN_TOKEN], 'utf-8');
+    return Helpers.toBuffer(this.envConfig[ConfigKey.SLACK_SIGN_IN_TOKEN]);
   }
 
   get isDevelopment(): boolean {

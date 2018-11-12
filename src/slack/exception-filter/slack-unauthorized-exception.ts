@@ -1,4 +1,4 @@
-import { HttpException, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 
 export class SlackUnauthorizedException extends UnauthorizedException {
   constructor(message: string) {

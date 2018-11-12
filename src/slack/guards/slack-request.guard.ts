@@ -1,5 +1,6 @@
 import { CanActivate, Injectable, ExecutionContext } from '@nestjs/common';
 import { ConfigurationService } from '../../shared/configuration/configuration.service';
+import { Helpers } from '../../shared/utils/helpers';
 import { SlackHelpers } from '../../shared/utils/slack-helpers';
 import { SlackUnauthorizedException } from '../exception-filter/slack-unauthorized-exception';
 import { SlashCommandPayload } from '../models';
@@ -23,6 +24,6 @@ export class SlackRequestGuard implements CanActivate {
     const slackSignature = request.headers['x-slack-signature'];
     const payload = request.body as SlashCommandPayload;
     const hash = SlackHelpers.hashBaseString(this.configService.slackSignInToken, payload, ts);
-    return SlackHelpers.compareHmac(hash, slackSignature);
+    return SlackHelpers.compareHmac(hash, Helpers.toBuffer(slackSignature));
   }
 }
