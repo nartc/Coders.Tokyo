@@ -25,7 +25,7 @@ export class SlackController {
   }
 
   @Post('info')
-  async handleInfo(@Body() data: SlashCommandPayload, @Req() request): Promise<BotMessage> {
+  async handleInfo(@Body() data: SlashCommandPayload): Promise<BotMessage> {
     try {
       this.slackService.handleInfo(data);
       return SlackHelpers.getImmediateResponse();

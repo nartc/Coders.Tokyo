@@ -26,7 +26,7 @@ export class SlackHelpers {
   static hashBaseString(slackSignature: Buffer, payload: SlashCommandPayload, ts: number) {
     const hmac = createHmac('sha256', slackSignature);
     const sigBaseString = `v0:${ts}:${stringify(payload)}`;
-    return `v0=${hmac.update(sigBaseString).digest()}`;
+    return Buffer.from(`v0=${hmac.update(sigBaseString).digest()}`, 'utf-8');
   }
 
   static compareHmac(signature, slackSignature): boolean {
