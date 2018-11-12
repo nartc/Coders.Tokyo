@@ -1,0 +1,6 @@
+production.env
+node_modules
+test
+dist
+.idea
+.vscode
