@@ -16,11 +16,11 @@ class SearchInformation {
 }
 
 class PageMap {
-  cse_thumbnail: CseThumnail[];
+  cse_thumbnail: CseThumbnail[];
   metatags: MetaTag[];
 }
 
-class CseThumnail {
+class CseThumbnail {
   width: number;
   height: number;
   src: string;

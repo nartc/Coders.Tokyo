@@ -19,6 +19,6 @@ export class GoogleSearchService {
 
   search(query: string, cx: string): Observable<AxiosResponse<GoogleSearchResponse>> {
     const url = this.baseUrl.replace('{cx}', cx).concat(query);
-    return this.httpService.get<GoogleSearchResponse>(url).pipe(tap(res => console.log(res.data)));
+    return this.httpService.get<GoogleSearchResponse>(url).pipe(tap(res => console.log(res.data.items[0].pagemap.cse_thumbnail)));
   }
 }

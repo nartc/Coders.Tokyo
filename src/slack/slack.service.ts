@@ -34,10 +34,14 @@ export class SlackService {
 
     const response = await this.search(text, ConfigKey.GG_SEARCH_MDN_CX);
 
-    const messageAttachment: MessageAttachment[] = SlackHelpers.getSuccessAttachment(response);
-    const message: BotMessage = SlackHelpers.getSuccessMessage(messageAttachment);
+    try {
+      const messageAttachment: MessageAttachment[] = SlackHelpers.getSuccessAttachment(response);
+      const message: BotMessage = SlackHelpers.getSuccessMessage(messageAttachment);
 
-    this.sendResponse(response_url, message);
+      this.sendResponse(response_url, message);
+    } catch (e) {
+      throw new Error(e.message);
+    }
   }
 
   async searchSo(): Promise<GoogleSearchResponse> {
