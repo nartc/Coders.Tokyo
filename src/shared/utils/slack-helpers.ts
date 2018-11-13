@@ -27,12 +27,20 @@ export class SlackHelpers {
   }
 
   static getSuccessAttachment(response: GoogleSearchResponse): MessageAttachment[] {
+    let text: string;
+
+    if (response.items[0].pagemap.metatags) {
+      text = response.items[0].pagemap.metatags[0]['og:description'];
+    } else {
+      text = response.items[0].snippet;
+    }
+
     return [
       {
         fallback: FALLBACK_STRING,
         color: SUCCESS_COLOR,
         footer: FOOTER_STRING,
-        text: response.items[0].pagemap.metatags[0]['og:description'],
+        text,
         title: response.items[0].title,
         title_link: response.items[0].link,
         thumb_url: response.items[0].pagemap.cse_thumbnail[0].src,
