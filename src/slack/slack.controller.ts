@@ -32,4 +32,15 @@ export class SlackController {
       return SlackHelpers.getErrorResponse(e);
     }
   }
+
+  @Post('mdn')
+  @UseGuards(SlackRequestGuard)
+  async handleMdn(@Body() data: SlashCommandPayload): Promise<BotMessage> {
+    try {
+      this.slackService.handleMdn(data);
+      return SlackHelpers.getImmediateResponse();
+    } catch (e) {
+      return SlackHelpers.getErrorResponse(e);
+    }
+  }
 }

@@ -1,12 +1,13 @@
 import { HttpService, Injectable } from '@nestjs/common';
-import { map } from 'rxjs/operators';
 import { AxiosResponse } from 'axios';
-
-import { GoogleSearchResponse, GoogleSearchService } from '../shared/google-search';
+import { map } from 'rxjs/operators';
 import { ConfigKey } from '../shared/configuration/configuration.enum';
 import { ConfigurationService } from '../shared/configuration/configuration.service';
+
+import { GoogleSearchResponse, GoogleSearchService } from '../shared/google-search';
 import { Helpers } from '../shared/utils/helpers';
-import { BotMessage, SlashCommandPayload } from './models';
+import { SlackHelpers } from '../shared/utils/slack-helpers';
+import { BotMessage, MessageAttachment, SlashCommandPayload } from './models';
 
 @Injectable()
 export class SlackService {
@@ -25,9 +26,18 @@ export class SlackService {
       response_type: 'in_channel',
     };
 
-    this.httpService.post(response_url, message)
-      .pipe(Helpers.catchObservableError)
-      .toPromise();
+    this.sendResponse(response_url, message);
+  }
+
+  async handleMdn(payload: SlashCommandPayload): Promise<void> {
+    const { response_url, text } = payload;
+
+    const response = await this.search(text, ConfigKey.GG_SEARCH_MDN_CX);
+
+    const messageAttachment: MessageAttachment[] = SlackHelpers.getSuccessAttachment(response);
+    const message: BotMessage = SlackHelpers.getSuccessMessage(messageAttachment);
+
+    this.sendResponse(response_url, message);
   }
 
   async searchSo(): Promise<GoogleSearchResponse> {
@@ -36,6 +46,21 @@ export class SlackService {
         map((response: AxiosResponse<GoogleSearchResponse>) => response.data),
         Helpers.catchObservableError,
       )
+      .toPromise();
+  }
+
+  private search(query: string, cx: ConfigKey): Promise<GoogleSearchResponse> {
+    return this.googleSearchService.search(query, this.configService.get(cx))
+      .pipe(
+        map((response: AxiosResponse<GoogleSearchResponse>) => response.data),
+        Helpers.catchObservableError,
+      )
+      .toPromise();
+  }
+
+  private sendResponse(url: string, message: BotMessage) {
+    this.httpService.post(url, message)
+      .pipe(Helpers.catchObservableError)
       .toPromise();
   }
 }

@@ -14,5 +14,6 @@ export class MessageAttachment {
   author_icon?: string;
   color?: string;
   title?: string;
+  title_link?: string;
   thumb_url?: string;
 }
