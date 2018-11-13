@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpService, Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { AxiosResponse } from 'axios';
 
@@ -6,18 +6,30 @@ import { GoogleSearchResponse, GoogleSearchService } from '../shared/google-sear
 import { ConfigKey } from '../shared/configuration/configuration.enum';
 import { ConfigurationService } from '../shared/configuration/configuration.service';
 import { Helpers } from '../shared/utils/helpers';
-import { SlashCommandPayload } from './models';
+import { BotMessage, SlashCommandPayload } from './models';
 
 @Injectable()
 export class SlackService {
 
   constructor(private readonly googleSearchService: GoogleSearchService,
-              private readonly configService: ConfigurationService) {
+              private readonly configService: ConfigurationService,
+              private readonly httpService: HttpService) {
   }
 
   async handleInfo(payload: SlashCommandPayload): Promise<void> {
     const { response_url, channel_id, text } = payload;
+    try {
+      const message: BotMessage = {
+        text: 'Info is being constructed',
+        replace_original: true,
+        delete_original: true,
+        response_type: 'in_channel',
+      };
 
+      this.httpService.post(response_url, message);
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   async searchSo(): Promise<GoogleSearchResponse> {
