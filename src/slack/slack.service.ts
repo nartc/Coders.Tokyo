@@ -17,19 +17,17 @@ export class SlackService {
   }
 
   async handleInfo(payload: SlashCommandPayload): Promise<void> {
-    const { response_url, channel_id, text } = payload;
-    try {
-      const message: BotMessage = {
-        text: 'Info is being constructed',
-        replace_original: true,
-        delete_original: true,
-        response_type: 'in_channel',
-      };
+    const { response_url } = payload;
+    const message: BotMessage = {
+      text: 'Info is being constructed',
+      replace_original: true,
+      delete_original: true,
+      response_type: 'in_channel',
+    };
 
-      this.httpService.post(response_url, message).toPromise();
-    } catch (e) {
-      throw new Error(e);
-    }
+    this.httpService.post(response_url, message)
+      .pipe(Helpers.catchObservableError)
+      .toPromise();
   }
 
   async searchSo(): Promise<GoogleSearchResponse> {
