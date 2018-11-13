@@ -1,7 +1,7 @@
 export const GG_SEARCH_URL = 'https://www.googleapis.com/customsearch/v1?' +
   'key={key}&' +
   'cx={cx}&' +
-  'fields=items(title, link, snippet,pagemap(cse_thumnail,metatags(og:description))),searchInformation(searchTime, totalResults)&' +
+  'fields=items(title, link, snippet,pagemap(cse_thumbnail,metatags(og:description))),searchInformation(searchTime, totalResults)&' +
   'q=';
 
 export const SUCCESS_COLOR = 'good';
