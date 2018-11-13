@@ -26,7 +26,7 @@ export class SlackService {
         response_type: 'in_channel',
       };
 
-      this.httpService.post(response_url, message);
+      this.httpService.post(response_url, message).toPromise();
     } catch (e) {
       throw new Error(e);
     }
