@@ -1,6 +1,7 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
+import { tap } from 'rxjs/operators';
 
 import { ConfigurationService } from '../configuration/configuration.service';
 import { GoogleSearchResponse } from './google-search-response.model';
@@ -18,6 +19,6 @@ export class GoogleSearchService {
 
   search(query: string, cx: string): Observable<AxiosResponse<GoogleSearchResponse>> {
     const url = this.baseUrl.replace('{cx}', cx).concat(query);
-    return this.httpService.get<GoogleSearchResponse>(url);
+    return this.httpService.get<GoogleSearchResponse>(url).pipe(tap(res => console.log(res.data)));
   }
 }
