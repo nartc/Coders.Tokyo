@@ -1,13 +1,9 @@
 import { createHmac, timingSafeEqual } from 'crypto';
 import { stringify } from 'qs';
 import { BotMessage, MessageAttachment, SlashCommandPayload } from '../../slack/models';
+import { FALLBACK_STRING, FOOTER_STRING, SUCCESS_COLOR } from '../constants';
 import { GoogleSearchResponse } from '../google-search';
 import { Helpers } from './helpers';
-
-const SUCCESS_COLOR = 'success';
-const ERROR_COLOR = 'danger';
-const FALLBACK_STRING = 'Channel does not support me';
-const FOOTER_STRING = 'Coders.Tokyo Slackbot';
 
 export class SlackHelpers {
   static defaultMessage: BotMessage = {
@@ -36,9 +32,10 @@ export class SlackHelpers {
         fallback: FALLBACK_STRING,
         color: SUCCESS_COLOR,
         footer: FOOTER_STRING,
-        text: response.items[0].snippet,
+        text: response.items[0].pagemap.metatags[0]['og:description'],
         title: response.items[0].title,
         title_link: response.items[0].link,
+        thumb_url: response.items[0].pagemap.cse_thumbnail[0].src,
       },
     ];
   }
