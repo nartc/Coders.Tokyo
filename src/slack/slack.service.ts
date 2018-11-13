@@ -31,10 +31,8 @@ export class SlackService {
 
   async handleMdn(payload: SlashCommandPayload): Promise<void> {
     const { response_url, text } = payload;
-
-    const response = await this.search(text, ConfigKey.GG_SEARCH_MDN_CX);
-
     try {
+      const response = await this.search(text, ConfigKey.GG_SEARCH_MDN_CX);
       const messageAttachment: MessageAttachment[] = SlackHelpers.getSuccessAttachment(response);
       const message: BotMessage = SlackHelpers.getSuccessMessage(messageAttachment);
 

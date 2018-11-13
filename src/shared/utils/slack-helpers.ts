@@ -45,7 +45,6 @@ export class SlackHelpers {
       ...SlackHelpers.defaultMessage,
       response_type: 'in_channel',
       attachments,
-      text: 'Here you go',
     };
   }
 
