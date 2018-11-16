@@ -55,4 +55,15 @@ export class SlackController {
       return SlackHelpers.getErrorResponse(e);
     }
   }
+
+  @Post('w3s')
+  @UseGuards(SlackRequestGuard)
+  async handleW3s(@Body() data: SlashCommandPayload): Promise<BotMessage> {
+    try {
+      this.slackService.handleSearch(data, ConfigKey.GG_SEARCH_W3S_CX);
+      return SlackHelpers.getImmediateResponse();
+    } catch (e) {
+      return SlackHelpers.getErrorResponse(e);
+    }
+  }
 }
